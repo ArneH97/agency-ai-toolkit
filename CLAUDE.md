@@ -6,7 +6,8 @@ A toolkit that makes Claude useful for a digital agency: website audits and lead
 - `mcp-server/`: MCP server (TypeScript) with two tools: `website_check` and `marketing_scan`
 - `.claude/skills/website-audit/`: skill for a client-ready audit
 - `.claude/skills/lead-scoring/`: skill for a lead score out of 100 + proposal (`template.html`, `diensten.md`)
-- `.claude/commands/`: slash commands `/audit` and `/lead`
+- `.claude/skills/laravel-setup/`: skill for setting up a new Laravel project (intake + scaffold)
+- `.claude/commands/`: slash commands `/audit`, `/lead`, `/nieuw-project` and `/ship`
 - `templates/laravel/CLAUDE.md`: template for Laravel client projects
 - `voorbeelden/`: example output
 - `rapporten/`: generated reports (not in Git)

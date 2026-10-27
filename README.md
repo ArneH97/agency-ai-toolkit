@@ -4,6 +4,8 @@ An AI toolkit for digital agencies, built on Claude. Type one command and you ge
 
 - **`/audit klant.be`**: a client-ready website audit with the top 3 issues and quick wins
 - **`/lead prospect.be`**: a **lead report with a score out of 100**: how interesting the company is as a client, which opportunities there are, and a proposal in 3 phases, as a styled document you can save as a PDF straight away
+- **`/ship`** (or `/ship pr`): checks for secrets and failing tests, writes a clear commit message, commits and pushes to GitHub, optionally as a pull request, without a terminal or GitHub Desktop
+- **`/nieuw-project`**: Claude runs a short intake (client, goal, scope, roles, frontend, integrations, languages) and **sets up a complete Laravel project automatically**: starter kit, roles, service classes for Odoo/Teamleader/Mollie, CLAUDE.md, project brief, tests and the first Git commit
 
 👉 Example: [`voorbeelden/lead-rapport-voorbeeld.html`](voorbeelden/lead-rapport-voorbeeld.html) (fictional company)
 
@@ -14,7 +16,8 @@ An AI toolkit for digital agencies, built on Claude. Type one command and you ge
 | **MCP server** (`mcp-server/`) | Gives Claude two tools: `website_check` (SEO basics, speed) and `marketing_scan` (CMS, tracking, ad pixels, cookie banner, lead flow, socials, GEO readiness) |
 | **Skill: website-audit** | Turns the check into a clear audit for the client |
 | **Skill: lead-scoring** | Scoring model out of 100 across 4 categories, links opportunities to the agency's services and fills in an HTML report |
-| **Commands** | `/audit` and `/lead`: the whole workflow in one command, the same for every team member |
+| **Skill: laravel-setup** | Intake in 2 rounds, then a project setup according to the agency standard, including a project brief (`PROJECT.md`) and integration stubs |
+| **Commands** | `/audit`, `/lead`, `/nieuw-project` and `/ship`: the whole workflow in one command, the same for every team member |
 | **Laravel template** | `templates/laravel/CLAUDE.md`: agreements for AI-assisted work on Laravel client projects |
 
 ## How it works
@@ -36,7 +39,7 @@ Claude ──▶ website_check  ─┐
 
 ## Installation
 
-Requires Node.js 18+ and [Claude Code](https://docs.claude.com/en/docs/claude-code).
+Requires Node.js 18+ and [Claude Code](https://docs.claude.com/en/docs/claude-code). For `/nieuw-project` you also need PHP 8.2+ and Composer (`brew install php composer`).
 
 ```bash
 git clone https://github.com/ArneH97/agency-ai-toolkit.git
