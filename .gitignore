@@ -1,8 +1,7 @@
+.DS_Store
+.env
+dist/
 node_modules/
 vendor/
-dist/
-.env
-.DS_Store
 rapporten/
-settings.local.json
 settings.local.json
