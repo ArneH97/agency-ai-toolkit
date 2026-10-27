@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<title>Leadrapport — {{DOMEIN}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* Pas --accent aan naar de huisstijlkleur van het bureau */
+  :root { --accent:#1F5C4A; --accent-soft:#E7F0EB; --ink:#16201C; --muted:#56615C; --line:#DDE5E0; --hot:#B4471F; --warm:#B7791F; --cold:#4A6A8A; }
+  @page { size:A4; margin:14mm 15mm; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Inter, system-ui, sans-serif; color:var(--ink); font-size:12.5px; line-height:1.5; background:#fff; }
+  h1,h2,h3 { font-family:"Inter Tight", Inter, sans-serif; margin:0; }
+  .wrap { max-width:820px; margin:0 auto; padding:28px 24px; }
+  header { display:flex; justify-content:space-between; align-items:flex-start; gap:24px; padding-bottom:18px; border-bottom:2px solid var(--ink); }
+  .eyebrow { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  header h1 { font-size:28px; margin-top:4px; line-height:1.1; }
+  header .meta { color:var(--muted); font-size:12px; margin-top:6px; }
+  .score { text-align:center; flex:0 0 150px; }
+  .score svg { display:block; margin:0 auto; }
+  .score .num { font-family:"Inter Tight"; font-size:34px; font-weight:700; }
+  .label { display:inline-block; margin-top:6px; padding:3px 10px; border-radius:999px; font-weight:600; font-size:12px; color:#fff; }
+  .label.hot { background:var(--hot); } .label.warm { background:var(--warm); } .label.cold { background:var(--cold); }
+  h2 { break-after:avoid; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin:24px 0 10px; }
+  .summary { font-size:14px; line-height:1.55; margin-top:16px; }
+  .cats { display:grid; grid-template-columns:repeat(2,1fr); gap:10px 22px; }
+  .cat .top { display:flex; justify-content:space-between; font-weight:600; }
+  .cat .bar { height:8px; background:var(--accent-soft); border-radius:4px; margin:5px 0 3px; overflow:hidden; }
+  .cat .bar span { display:block; height:100%; background:var(--accent); border-radius:4px; }
+  .cat .why { color:var(--muted); font-size:11.5px; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .box { background:#F6F8F7; border-radius:8px; padding:12px 14px; }
+  .box h3 { font-size:13px; margin-bottom:6px; }
+  ul { margin:0; padding-left:16px; } li { margin:0 0 3px; } li::marker { color:var(--accent); }
+  table { width:100%; border-collapse:collapse; }
+  th { text-align:left; font-size:11px; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); border-bottom:1.5px solid var(--ink); padding:6px 8px 6px 0; }
+  td { border-bottom:1px solid var(--line); padding:7px 8px 7px 0; vertical-align:top; }
+  .impact { font-weight:600; white-space:nowrap; }
+  .impact.hoog { color:var(--hot); } .impact.middel { color:var(--warm); } .impact.laag { color:var(--muted); }
+  .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+  .phase { border:1.5px solid var(--accent); border-radius:10px; padding:12px 14px; break-inside:avoid; }
+  .phase .when { font-size:11px; color:var(--muted); }
+  .phase h3 { font-size:14px; margin:2px 0 8px; }
+  .talk li { margin-bottom:6px; }
+  footer { margin-top:26px; padding-top:10px; border-top:1px solid var(--line); color:var(--muted); font-size:10.5px; }
+  section, .box, table { break-inside:avoid; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="eyebrow">Leadrapport · prospectanalyse</div>
+    <h1>{{BEDRIJFSNAAM}}</h1>
+    <div class="meta">{{DOMEIN}} · {{DATUM}} · Opgemaakt door {{BUREAU}}</div>
+  </div>
+  <div class="score">
+    <!-- Cirkel: zet {{DASH}} = score × 3,27 (bv. score 72 → 235) -->
+    <svg width="120" height="120" viewBox="0 0 120 120" aria-label="Leadscore {{SCORE}} op 100">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent-soft)" stroke-width="10"/>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round"
+              stroke-dasharray="{{DASH}} 327" transform="rotate(-90 60 60)"/>
+      <text x="60" y="66" text-anchor="middle" font-family="Inter Tight, sans-serif" font-size="32" font-weight="700" fill="#16201C">{{SCORE}}</text>
+      <text x="60" y="84" text-anchor="middle" font-size="11" fill="#56615C">/ 100</text>
+    </svg>
+    <!-- Klasse: hot (75+), warm (50–74) of cold (<50) -->
+    <span class="label {{LABEL_KLASSE}}">{{LABEL_TEKST}}</span>
+  </div>
+</header>
+
+<p class="summary">{{SAMENVATTING_2_ZINNEN}}</p>
+
+<h2>Scorekaart</h2>
+<div class="cats">
+  <!-- Herhaal voor de 4 categorieën; breedte = behaalde punten / max × 100% -->
+  <div class="cat">
+    <div class="top"><span>Groeipotentieel</span><span>{{A}}/40</span></div>
+    <div class="bar"><span style="width:{{A_PCT}}%"></span></div>
+    <div class="why">{{A_UITLEG}}</div>
+  </div>
+  <div class="cat">
+    <div class="top"><span>Fit met ons bureau</span><span>{{B}}/25</span></div>
+    <div class="bar"><span style="width:{{B_PCT}}%"></span></div>
+    <div class="why">{{B_UITLEG}}</div>
+  </div>
+  <div class="cat">
+    <div class="top"><span>Budget- en volwassenheidssignalen</span><span>{{C}}/20</span></div>
+    <div class="bar"><span style="width:{{C_PCT}}%"></span></div>
+    <div class="why">{{C_UITLEG}}</div>
+  </div>
+  <div class="cat">
+    <div class="top"><span>Timing en urgentie</span><span>{{D}}/15</span></div>
+    <div class="bar"><span style="width:{{D_PCT}}%"></span></div>
+    <div class="why">{{D_UITLEG}}</div>
+  </div>
+</div>
+
+<h2>Wat we zien</h2>
+<div class="two">
+  <div class="box">
+    <h3>Wat al goed zit</h3>
+    <ul>
+      <!-- 3 tot 4 punten -->
+      <li>{{STERKTE}}</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h3>Huidige stack</h3>
+    <ul>
+      <li><b>Platform:</b> {{PLATFORM}}</li>
+      <li><b>Meten &amp; adverteren:</b> {{TRACKING}}</li>
+      <li><b>Leadgeneratie:</b> {{LEADFLOW}}</li>
+      <li><b>Zichtbaarheid:</b> {{ZICHTBAARHEID}}</li>
+    </ul>
+  </div>
+</div>
+
+<section>
+<h2>Kansen</h2>
+<table>
+  <thead><tr><th style="width:42%">Kans</th><th style="width:30%">Wat het oplevert</th><th style="width:18%">Dienst</th><th>Impact</th></tr></thead>
+  <tbody>
+    <!-- 4 tot 6 rijen, hoogste impact eerst. Impactklasse: hoog / middel / laag -->
+    <tr><td>{{KANS}}</td><td>{{RESULTAAT}}</td><td>{{DIENST}}</td><td class="impact {{IMPACT_KLASSE}}">{{IMPACT}}</td></tr>
+  </tbody>
+</table>
+</section>
+
+<section>
+<h2>Voorstel</h2>
+<div class="phases">
+  <div class="phase">
+    <div class="when">Fase 1 · binnen 2 weken</div>
+    <h3>Quick wins</h3>
+    <ul><li>{{FASE1_PUNT}}</li></ul>
+  </div>
+  <div class="phase">
+    <div class="when">Fase 2 · 1 tot 3 maanden</div>
+    <h3>Groei</h3>
+    <ul><li>{{FASE2_PUNT}}</li></ul>
+  </div>
+  <div class="phase">
+    <div class="when">Fase 3 · structureel</div>
+    <h3>Systemen</h3>
+    <ul><li>{{FASE3_PUNT}}</li></ul>
+  </div>
+</div>
+</section>
+
+<section>
+<h2>Gesprekspunten voor de salescall</h2>
+<ol class="talk">
+  <li>{{GESPREKSPUNT_1}}</li>
+  <li>{{GESPREKSPUNT_2}}</li>
+  <li>{{GESPREKSPUNT_3}}</li>
+</ol>
+</section>
+
+<footer>
+  Gebaseerd op een automatische scan van de publieke homepage op {{DATUM}}. "Niet gedetecteerd" betekent niet altijd "niet aanwezig";
+  bevestig de bevindingen in een gesprek. Prijzen op offerte.
+</footer>
+
+</div>
+</body>
+</html>
